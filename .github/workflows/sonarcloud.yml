@@ -17,7 +17,7 @@ jobs:
         run: nuget restore -SolutionDirectory .
 
       - name: Build the project
-        run: msbuild /p:Configuration=Release
+        run: '"C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\MSBuild.exe" /p:Configuration=Release'
 
       - name: Run tests with coverage
         run: |
