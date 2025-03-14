@@ -18,7 +18,7 @@ jobs:
 
       - name: Build the project
         shell: cmd
-        run: '"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe" /p:Configuration=Release'
+        run: '"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"'
 
       - name: Run tests with coverage
         run: |
