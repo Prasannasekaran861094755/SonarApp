@@ -12,8 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-      - name: SonarQube Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          fetch-depth: 0  # Ensures full repo history for analysis
+          
+      - name: Install SonarScanner
+        run: |
+          dotnet tool install --global dotnet-sonarscanner
+
+      - name: Run SonarQube Analysis
+        run: |
+          dotnet-sonarscanner begin /k:"Prasannasekaran861094755_SonarApp" /d:sonar.host.url="prasannasekaran861094755" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.inclusions="**/*.cs" /d:sonar.verbose=true
+          dotnet build
+          dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
