@@ -13,23 +13,21 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '4.7.2'  # Match your project's target framework
-
-      - name: Restore dependencies
-        run: dotnet restore
+      - name: Restore NuGet packages
+        run: nuget restore
 
       - name: Build the project
-        run: dotnet build --configuration Release
+        run: msbuild /p:Configuration=Release
 
       - name: Run tests with coverage
         run: |
-          dotnet test --configuration Release --collect:"XPlat Code Coverage" --logger:trx
-          # Convert coverage report to OpenCover format (if needed)
+          # Install Coverlet for coverage
+          dotnet tool install --global coverlet.console
+          # Run tests with coverage
+          coverlet ./path/to/your/test/project/bin/Release/net472/YourTestProject.dll --target "dotnet" --targetargs "test ./path/to/your/test/project --no-build"
+          # Convert coverage report to OpenCover format
           dotnet tool install -g dotnet-reportgenerator-globaltool
-          reportgenerator -reports:./**/coverage.cobertura.xml -targetdir:./coverage -reporttypes:OpenCover
+          reportgenerator -reports:./coverage.cobertura.xml -targetdir:./coverage -reporttypes:OpenCover
 
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v5
