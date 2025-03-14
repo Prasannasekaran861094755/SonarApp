@@ -7,19 +7,20 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   sonarqube:
-    name: SonarQube
+    name: SonarCloud Analysis
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Ensures full repo history for analysis
-          
+
       - name: Install SonarScanner
         run: |
           dotnet tool install --global dotnet-sonarscanner
 
-      - name: Run SonarQube Analysis
+      - name: Run SonarCloud Analysis
         run: |
-          dotnet-sonarscanner begin /k:"Prasannasekaran861094755_SonarApp" /d:sonar.host.url="prasannasekaran861094755" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.inclusions="**/*.cs" /d:sonar.verbose=true
+          cd your_project_directory
+          dotnet-sonarscanner begin /k:"Prasannasekaran861094755_SonarApp" /o:"prasannasekaran861094755" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.inclusions="**/*.cs" /d:sonar.verbose=true
           dotnet build
           dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
