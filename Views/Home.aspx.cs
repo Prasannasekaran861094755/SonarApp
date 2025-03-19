@@ -9,7 +9,6 @@ namespace SonarApp.Views
 {
     public partial class Home : System.Web.UI.Page
     {
-string test_sonar_var="1233";
         protected void Page_Load(object sender, EventArgs e)
         {
 
