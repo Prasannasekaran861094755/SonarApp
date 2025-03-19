@@ -9,7 +9,7 @@ namespace SonarApp.Views
 {
     public partial class Home : System.Web.UI.Page
     {
- string test="1234";
+
         protected void Page_Load(object sender, EventArgs e)
         {
         }
